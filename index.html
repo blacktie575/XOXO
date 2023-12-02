@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+
+        button {
+            width: 100px;
+            height: 100px;
+            border: 2px solid #333;
+            cursor: pointer;
+            background-color: #fff;
+            font-size: 24px;
+        }
+
+        button:hover {
+            background-color: #f0f0f0;
+        }
+
+        #msg {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="board">
+        <button id="0" onclick="play(event)"></button>
+        <button id="1" onclick="play(event)"></button>
+        <button id="2" onclick="play(event)"></button><br>
+        <button id="3" onclick="play(event)"></button>
+        <button id="4" onclick="play(event)"></button>
+        <button id="5" onclick="play(event)"></button><br>
+        <button id="6" onclick="play(event)"></button>
+        <button id="7" onclick="play(event)"></button>
+        <button id="8" onclick="play(event)"></button>
+    </div>
+    <div id="msg"></div>
+
+    <script>
+        let turn = "X";
+        let counter = 0;
+        let ar = ["", "", "", "", "", "", "", "", ""];
+
+        function play(event) {
+            if (event.target.innerText == "" && !checkWin()) {
+                event.target.innerText = turn;
+                ar[event.target.id] = turn;
+                turn = (turn == "X" ? "O" : "X");
+                msg.innerHTML = `<h1>Turn of player ${turn}</h1>`;
+                counter++;
+
+                if (counter == 9 && !checkWin()) {
+                    msg.innerHTML = "<h1>It's a Tie!</h1>";
+                }
+            }
+        }
+
+        function checkWin() {
+            const winCombinations = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+                [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+                [0, 4, 8], [2, 4, 6]              // Diagonals
+            ];
+
+            for (const combo of winCombinations) {
+                const [a, b, c] = combo;
+                if (ar[a] !== "" && ar[a] === ar[b] && ar[b] === ar[c]) {
+                    msg.innerHTML = `<h1>Player ${ar[a]} wins!</h1>`;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    </script>
+</body>
+
+</html>
